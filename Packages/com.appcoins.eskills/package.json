@@ -1,0 +1,21 @@
+{
+  "name": "com.appcoins.eskills",
+  "version": "0.0.1",
+  "displayName": "Tools for e-skills",
+  "description": "This package will assist you on e-skills integration",
+  "unity": "2019.4",
+  "unityRelease": "0f1",
+  "documentationUrl": "https://docs.catappult.io/docs/overview-2/",
+  "changelogUrl": "https://example.com/changelog.html",
+ "keywords": [
+    "eskills",
+    "appcoins",
+    "catappult",
+    "e-skills"
+  ],
+  "author": {
+    "name": "AppCoins",
+    "email": "developers@appcoins.io",
+    "url": "https://catappult.io/"
+  }
+}
