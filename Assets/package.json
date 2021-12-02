@@ -1,19 +1,18 @@
 {
     "name": "com.appcoins.eskills",
-    "version": "2.4.0",
+    "version": "0.0.1",
     "displayName": "Eskills",
-    "description": "A plugin to simplify the integration of Amplitude iOS and Android SDKs into your Unity project. This repository also contains a sample project with the Unity plugin integrated.",
+    "description": "A plugin to simplify the integration of eskills Android SDK into your Unity project. This repository also contains a sample project with the Unity plugin integrated.",
     "unity": "2019.4",
-    "unityRelease": "18f1",
+    "unityRelease": "0f1",
     "dependencies": {
 
     },
     "keywords": [
-        "Amplitude"
+        "eskills", "appcoins", "catappult"
     ],
     "author": {
-        "name": "Amplitude",
-        "email": "contact@amplitude.com",
-        "url": "https://github.com/amplitude/unity-plugin/"
+        "name": "Catappult",
+        "url": "https://github.com/Catappult/eskills-unity-plugin"
     }
 }
