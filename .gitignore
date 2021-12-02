@@ -232,7 +232,7 @@ ExportedObj/
 sysinfo.txt
 
 # Builds
-*.unitypackage
+#*.unitypackage
 
 # Crashlytics generated file
 
