@@ -7,7 +7,6 @@ namespace Eskills.Ui
     [System.Serializable]
     public class MatchParameters : ScriptableObject
     {
-        [SerializeField] public string userName;
         [SerializeField] public float value;
         [SerializeField] public string currency = "USD";
         [SerializeField] public string product;
@@ -17,7 +16,7 @@ namespace Eskills.Ui
 
         public override string ToString()
         {
-            return "UserName: " + userName + " Value: " + value + " Currency: " + currency + " Product: " + product +
+            return " Value: " + value + " Currency: " + currency + " Product: " + product +
                    " Timeout: " +
                    timeout + " MatchEnvironment: " + matchEnvironment + " NumberOfPlayers: " + numberOfPlayers;
         }

@@ -10,6 +10,7 @@ namespace Eskills
     public class EskillsService : MonoBehaviour, ICoroutineExecutor
     {
         private EskillsManager _eskillsManager;
+        [SerializeField] public UserNameProvider _userNameProvider;
 
 
         void Start()
@@ -23,13 +24,24 @@ namespace Eskills
 
         public void StartPurchase(MatchParameters matchParameters)
         {
-            if (Application.platform == RuntimePlatform.Android)
+            if (Application.platform != RuntimePlatform.Android) return;
+            string userName;
+            if (_userNameProvider == null)
             {
-                _eskillsManager.StartPurchase(matchParameters.userName, matchParameters.value, matchParameters.currency,
-                    matchParameters.product, matchParameters.timeout, matchParameters.matchEnvironment,
-                    matchParameters.numberOfPlayers);
+                userName = "";
+                Debug.LogWarning("You should provide an implementation of " + nameof(UserNameProvider) +
+                                 " before calling StartPurchase method. An empty user name was used");
             }
+            else
+            {
+                userName = _userNameProvider.GetUserName();
+            }
+
+            _eskillsManager.StartPurchase(userName, matchParameters.value, matchParameters.currency,
+                matchParameters.product, matchParameters.timeout, matchParameters.matchEnvironment,
+                matchParameters.numberOfPlayers);
         }
+
 
         public void GetRoomInfo(string session, Action<RoomData> success, Action<EskillsError> error)
         {

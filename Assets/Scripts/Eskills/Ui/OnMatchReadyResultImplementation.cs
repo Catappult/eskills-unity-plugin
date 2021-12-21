@@ -8,10 +8,10 @@ namespace Eskills.Ui
         [SerializeField] private Text roomIdText;
 
 
-        public override void OnMatchReady(string matchId)
+        public override void OnMatchReady(string session)
         {
-            Debug.Log("OnMatchReadyResultImplementation" + matchId);
-            roomIdText.text = matchId;
+            Debug.Log("OnMatchReadyResultImplementation" + session);
+            roomIdText.text = session;
         }
     }
 }

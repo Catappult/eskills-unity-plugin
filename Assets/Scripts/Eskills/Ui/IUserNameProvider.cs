@@ -1,7 +1,9 @@
+using UnityEngine;
+
 namespace Eskills.Ui
 {
-    public interface IUserNameProvider
+    public abstract class UserNameProvider : MonoBehaviour
     {
-        string GetUserName();
+        public abstract string GetUserName();
     }
 }
