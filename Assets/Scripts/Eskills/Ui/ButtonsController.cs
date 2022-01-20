@@ -12,6 +12,9 @@ namespace Eskills.Ui
         [SerializeField] private Text sessionText;
         [SerializeField] private Text scoreText;
         [SerializeField] private Dropdown playerStatus;
+        [SerializeField] private Action<RoomData> success;
+        [SerializeField] private Action<EskillsError> error;
+
         private Boolean periodicUpdate = true;
         public void OnGetRoomInfoClick()
         {
@@ -30,7 +33,7 @@ namespace Eskills.Ui
         }
 	    public void OnGetPeriodicUpdates()
         {
-            var coroutine = GetPeriodicRoomInfoUpdates(sessionText.text,Success,Error);
+            var coroutine = GetPeriodicRoomInfoUpdates(sessionText.text,success,error);
             StartCoroutine(coroutine);
         }
 
@@ -38,8 +41,7 @@ namespace Eskills.Ui
         {
             while (periodicUpdate)
             {
-                service.GetRoomInfo(session,
-                success,error);
+                service.GetRoomInfo(session,success,error);
                 Debug.Log("PERIODIC_SCORE_UPDATE");
                 yield return new WaitForSeconds(5.0f);
             }
