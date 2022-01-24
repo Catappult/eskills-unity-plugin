@@ -42,9 +42,9 @@ namespace Eskills.Ui
             var coroutine = GetPeriodicRoomInfoUpdates(
                 sessionText.text,
                 room => {
-                    if(room.status == RoomStatus.Completed){
+                    if(room.status == RoomStatus.COMPLETED){
                         cancelPeriodicUpdate();
-                        Debug.Log(room.roomResult.winner+ "Won!");
+                        Debug.Log(room.roomResult.winner.userName+ " Won!");
                     }
                     else {
                         Debug.Log("Waiting For All Players to Finish");

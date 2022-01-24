@@ -1563,7 +1563,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1884698649}
         m_TargetAssemblyTypeName: Eskills.Ui.ButtonsController, Assembly-CSharp
-        m_MethodName: OnGetPeriodicUpdates
+        m_MethodName: OnWaitForAllPlayersToFinish
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2757,7 +2757,6 @@ GameObject:
   - component: {fileID: 1884698647}
   - component: {fileID: 1884698646}
   - component: {fileID: 1884698649}
-  - component: {fileID: 1884698650}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -2846,19 +2845,6 @@ MonoBehaviour:
   sessionText: {fileID: 782871253}
   scoreText: {fileID: 627524184}
   playerStatus: {fileID: 1660288430}
-  onPeriodicUpdate: {fileID: 1884698650}
---- !u!114 &1884698650
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1884698645}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d96598d34d6f1e1c6a5712edc2c96819, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1939118496
 GameObject:
   m_ObjectHideFlags: 0
