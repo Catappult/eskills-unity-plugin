@@ -38,6 +38,23 @@ namespace Eskills.Ui
             StartCoroutine(coroutine);
         }
 
+        public void OnWaitForAllPlayersToFinish(){
+            var coroutine = GetPeriodicRoomInfoUpdates(
+                sessionText.text,
+                room => {
+                    if(room.status == RoomStatus.Completed){
+                        cancelPeriodicUpdate();
+                        Debug.Log(room.roomResult.winner+ "Won!");
+                    }
+                    else {
+                        Debug.Log("Waiting For All Players to Finish");
+                    }
+                },
+                error => Debug.Log(error.Message)
+            );
+            StartCoroutine(coroutine);
+        }
+
         private IEnumerator GetPeriodicRoomInfoUpdates(string session, Action<RoomData> success, Action<EskillsError> error)
         {
             while (periodicUpdate)
