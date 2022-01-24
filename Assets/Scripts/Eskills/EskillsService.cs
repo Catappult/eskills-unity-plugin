@@ -13,7 +13,7 @@ namespace Eskills
         [SerializeField] public UserNameProvider _userNameProvider;
 
 
-        void Start()
+        void Awake()
         {
             var roomRepository = new RoomRepository(new RoomResponseMapper());
             var getRoomInfoUseCase = new GetRoomInfoUseCase(roomRepository, this);
