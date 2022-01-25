@@ -16,9 +16,12 @@ namespace Eskills
         void Awake()
         {
             var roomRepository = new RoomRepository(new RoomResponseMapper());
+            var TicketRepository = new TicketRepository(new TicketResponseMapper());
             var getRoomInfoUseCase = new GetRoomInfoUseCase(roomRepository, this);
             var setScoreUseCase = new SetScoreUseCase(roomRepository, this);
-            _eskillsManager = new EskillsManager(new PurchaseActivity(), getRoomInfoUseCase, setScoreUseCase);
+            var getTicketUseCase = new GetTicketUseCase(TicketRepository, this);
+            var createTicketUseCase = new CreateTicketUseCase(TicketRepository, this);
+            _eskillsManager = new EskillsManager(new PurchaseActivity(), getRoomInfoUseCase, setScoreUseCase, getTicketUseCase, createTicketUseCase);
         }
 
 
@@ -52,6 +55,16 @@ namespace Eskills
             Action<EskillsError> error = null)
         {
             _eskillsManager.SetScore(session, status, score, success, error);
+        }
+
+        public void GetTicket(string ewt, string ticket_id, Action<TicketData> success, Action<EskillsError> error)
+        {
+            _eskillsManager.GetTicket(ewt, ticket_id, success, error);
+        }
+
+        public void CreateTicket(string ewt, Action<TicketData> success, Action<EskillsError> error)
+        {
+            _eskillsManager.CreateTicket(ewt, success, error);
         }
     }
 }

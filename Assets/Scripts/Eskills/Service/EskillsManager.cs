@@ -10,13 +10,16 @@ namespace Eskills.Service
         private readonly PurchaseActivity _purchaseActivity;
         private readonly GetRoomInfoUseCase _getRoomInfoUseCase;
         private readonly SetScoreUseCase _setScoreUseCase;
-
+        private readonly GetTicketUseCase _getTicketUseCase;
+        private readonly CreateTicketUseCase _createTicketUseCase;
         public EskillsManager(PurchaseActivity purchaseActivity, GetRoomInfoUseCase getRoomInfoUseCase,
-            SetScoreUseCase setScoreUseCase)
+            SetScoreUseCase setScoreUseCase, GetTicketUseCase getTicketUseCase, CreateTicketUseCase createTicketUseCase)
         {
             _purchaseActivity = purchaseActivity;
             _getRoomInfoUseCase = getRoomInfoUseCase;
             _setScoreUseCase = setScoreUseCase;
+            _getTicketUseCase = getTicketUseCase;
+            _createTicketUseCase = createTicketUseCase;
         }
 
 
@@ -35,6 +38,16 @@ namespace Eskills.Service
             [CanBeNull] Action<RoomData> success, [CanBeNull] Action<EskillsError> error)
         {
             _setScoreUseCase.Execute(session, status, score, success, error);
+        }
+
+        public void CreateTicket(string ewt, Action<TicketData> success, Action<EskillsError> error)
+        {
+            _createTicketUseCase.Execute(ewt, success, error);
+        }
+
+        public void GetTicket(string ewt, string ticketId, Action<TicketData> success, Action<EskillsError> error)
+        {
+            _getTicketUseCase.Execute(ewt, ticketId, success, error);
         }
     }
 }
