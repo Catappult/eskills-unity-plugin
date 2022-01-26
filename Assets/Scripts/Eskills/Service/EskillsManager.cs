@@ -10,13 +10,15 @@ namespace Eskills.Service
         private readonly PurchaseActivity _purchaseActivity;
         private readonly GetRoomInfoUseCase _getRoomInfoUseCase;
         private readonly SetScoreUseCase _setScoreUseCase;
+        private readonly GetPeriodicUpdateUseCase _getPeriodicUpdateUseCase;
 
         public EskillsManager(PurchaseActivity purchaseActivity, GetRoomInfoUseCase getRoomInfoUseCase,
-            SetScoreUseCase setScoreUseCase)
+            SetScoreUseCase setScoreUseCase, GetPeriodicUpdateUseCase getPeriodicUpdateUseCase)
         {
             _purchaseActivity = purchaseActivity;
             _getRoomInfoUseCase = getRoomInfoUseCase;
             _setScoreUseCase = setScoreUseCase;
+            _getPeriodicUpdateUseCase = getPeriodicUpdateUseCase;
         }
 
 
@@ -35,6 +37,16 @@ namespace Eskills.Service
             [CanBeNull] Action<RoomData> success, [CanBeNull] Action<EskillsError> error)
         {
             _setScoreUseCase.Execute(session, status, score, success, error);
+        }
+
+        public void GetPeriodicUpdate(string session, Action<RoomData> success, Action<EskillsError> error)
+        {
+             _getPeriodicUpdateUseCase.Execute(session, success, error);
+        }
+
+        public void StopPeriodicUpdate()
+        {
+            _getPeriodicUpdateUseCase.Stop();
         }
     }
 }

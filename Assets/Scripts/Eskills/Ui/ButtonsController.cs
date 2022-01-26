@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using Eskills.Service.Repository;
 using UnityEngine;
 using UnityEngine.UI;
@@ -26,6 +27,19 @@ namespace Eskills.Ui
             service.SetScore(sessionText.text, status, int.Parse(scoreText.text),
                 room => Debug.Log("ButtonsController: " + room.roomId),
                 error => Debug.Log("ButtonsController: " + error.Message));
+        }
+	    public void OnGetPeriodicUpdates()
+        {
+            service.GetPeriodicUpdate(sessionText.text,
+                room => {
+                    Debug.Log("Periodic Score Update:"+room.roomId);
+                    if(room.currentUser.status == PlayerStatus.COMPLETED){
+                        service.StopPeriodicUpdate();
+                    }
+                },
+                error =>  Debug.Log(error.Message)
+            );
+
         }
     }
 }

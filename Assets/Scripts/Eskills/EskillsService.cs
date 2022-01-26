@@ -18,7 +18,8 @@ namespace Eskills
             var roomRepository = new RoomRepository(new RoomResponseMapper());
             var getRoomInfoUseCase = new GetRoomInfoUseCase(roomRepository, this);
             var setScoreUseCase = new SetScoreUseCase(roomRepository, this);
-            _eskillsManager = new EskillsManager(new PurchaseActivity(), getRoomInfoUseCase, setScoreUseCase);
+            var getPeriodicUpdateUseCase = new GetPeriodicUpdateUseCase(roomRepository,this);
+            _eskillsManager = new EskillsManager(new PurchaseActivity(), getRoomInfoUseCase, setScoreUseCase, getPeriodicUpdateUseCase);
         }
 
 
@@ -53,5 +54,15 @@ namespace Eskills
         {
             _eskillsManager.SetScore(session, status, score, success, error);
         }
+
+        public void GetPeriodicUpdate(string session, Action<RoomData> success, Action<EskillsError> error)
+        {
+            _eskillsManager.GetPeriodicUpdate(session,success,error);
+        }
+        public void StopPeriodicUpdate()
+        {
+            _eskillsManager.StopPeriodicUpdate();
+        }
+
     }
 }
