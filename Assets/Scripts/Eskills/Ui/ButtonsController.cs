@@ -32,23 +32,16 @@ namespace Eskills.Ui
         }
 	    public void OnGetPeriodicUpdates()
         {
-            var coroutine = GetPeriodicRoomInfoUpdates(sessionText.text,
-                room => Debug.Log("Periodic Score Update:"+room.roomId),
-                error => Debug.Log(error.Message));
-            StartCoroutine(coroutine);
-        }
+            service.GetPeriodicUpdate(sessionText.text,
+                room => {
+                    Debug.Log("Periodic Score Update:"+room.roomId);
+                    if(room.currentUser.status == PlayerStatus.COMPLETED){
+                        service.StopPeriodicUpdate();
+                    }
+                },
+                error =>  Debug.Log(error.Message)
+            );
 
-        private IEnumerator GetPeriodicRoomInfoUpdates(string session, Action<RoomData> success, Action<EskillsError> error)
-        {
-            while (periodicUpdate)
-            {
-                service.GetRoomInfo(session,success,error);
-                yield return new WaitForSeconds(5.0f);
-            }
-        }
-        public void cancelPeriodicUpdate()
-        {
-            periodicUpdate = false;
         }
     }
 }
