@@ -41,5 +41,19 @@ namespace Eskills.Ui
             );
 
         }
+
+        public void OnWaitForPlayersToFinnish()
+        {
+            service.GetPeriodicUpdate(sessionText.text,
+                room => {
+                    Debug.Log("Waiting For All Players To Finish");
+                    if(room.status == RoomStatus.COMPLETED){
+                        Debug.Log(room.roomResult.winner + " Won!");
+                        service.StopPeriodicUpdate();
+                    }
+                },
+                error =>  Debug.Log(error.Message)
+            );
+        }
     }
 }

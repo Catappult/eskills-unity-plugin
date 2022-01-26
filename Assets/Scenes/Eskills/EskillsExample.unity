@@ -2846,7 +2846,6 @@ MonoBehaviour:
   sessionText: {fileID: 782871253}
   scoreText: {fileID: 627524184}
   playerStatus: {fileID: 1660288430}
-  onPeriodicUpdate: {fileID: 1884698650}
 --- !u!114 &1884698650
 MonoBehaviour:
   m_ObjectHideFlags: 0
