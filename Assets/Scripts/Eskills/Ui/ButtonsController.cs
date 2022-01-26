@@ -46,12 +46,14 @@ namespace Eskills.Ui
             var coroutine = GetTicketUpdate(ewt, ticketId, 
             ticket =>{
                 Debug.Log("Waiting for players to match");
+                Debug.Log("Ticket Status" + ticket.ticketStatus);
                 if(ticket.ticketStatus == TicketStatus.COMPLETED){
                     Debug.Log("GameStarted");
                     cancelPeriodicUpdate();
                 }
             }, 
             error => Debug.Log("Something went wrong"));
+            StartCoroutine(coroutine);
         }
 
         private IEnumerator GetTicketUpdate(string ewt,string ticketId, Action<TicketData> success, Action<EskillsError> error)

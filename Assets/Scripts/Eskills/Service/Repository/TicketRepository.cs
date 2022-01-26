@@ -29,8 +29,10 @@ namespace Eskills.Service.Repository
             Action<EskillsError> error)
         {
             var body = new CreateTicketBody("user_id","test_user",_ticketParameters);
+            var room_metadata = new UTF8Encoding().GetBytes(JsonUtility.ToJson(body.room_metadata));
+            Debug.Log(System.Text.Encoding.Default.GetString(room_metadata));
             byte[] jsonToSend = new UTF8Encoding().GetBytes(JsonUtility.ToJson(body));
-
+            Debug.Log("TicketRepo:"+System.Text.Encoding.Default.GetString(jsonToSend));
             using (var request = new UnityWebRequest("https://api.eskills.catappult.io/queue/ticket/","POST"))
             {
                 request.SetRequestHeader("Content-Type", "application/json");
