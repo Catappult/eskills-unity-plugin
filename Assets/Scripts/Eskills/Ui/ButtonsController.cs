@@ -48,7 +48,7 @@ namespace Eskills.Ui
                 room => {
                     Debug.Log("Waiting For All Players To Finish");
                     if(room.status == RoomStatus.COMPLETED){
-                        Debug.Log(room.roomResult.winner + " Won!");
+                        Debug.Log(room.roomResult.winner.userName + " Won!");
                         service.StopPeriodicUpdate();
                     }
                 },
