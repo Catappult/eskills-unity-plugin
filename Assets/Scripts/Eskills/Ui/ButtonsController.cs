@@ -13,8 +13,6 @@ namespace Eskills.Ui
         [SerializeField] private Text scoreText;
         [SerializeField] private Dropdown playerStatus;
 
-        private Boolean periodicUpdate = true;
-
         public void OnGetRoomInfoClick()
         {
             service.GetRoomInfo(sessionText.text, room => Debug.Log("ButtonsController: " + room.roomId),
