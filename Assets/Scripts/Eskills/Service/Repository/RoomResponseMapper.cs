@@ -19,6 +19,12 @@ namespace Eskills.Service.Repository
             return new RoomData(roomId, currentUser, usersList, roomStatus, roomResult, packageName, usdStake);
         }
 
+        public string MapToken(string json)
+        {
+            JSONNode parsedData = JSON.Parse(json);
+            return parsedData["token"];
+        }
+
         private RoomResult mapRoomResult(JSONNode roomResultNode)
         {
             Decimal.TryParse(roomResultNode["winner_amount"], out Decimal winnerAmount);

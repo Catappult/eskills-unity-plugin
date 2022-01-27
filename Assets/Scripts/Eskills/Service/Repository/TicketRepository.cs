@@ -4,35 +4,28 @@ using System.Text;
 using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.Networking;
+using Newtonsoft.Json;
 
 namespace Eskills.Service.Repository
 {
     public class TicketRepository
     {
         private readonly TicketResponseMapper _mapper;
-        private readonly TicketParameters _ticketParameters;
         public TicketRepository(TicketResponseMapper mapper)
         {
             _mapper = mapper;
-            _ticketParameters = new TicketParameters(
-                "com.appcoins.unitytest",
-                1,
-                "USD",
-                "1v1",
-                MatchEnvironment.SANDBOX,
-                1,
-                600
-            );
         }
 
-        public IEnumerator CreateTicket(string ewt, Action<TicketData> success,
+        public IEnumerator CreateTicket(string ewt,TicketParameters ticketParameters, Action<TicketData> success,
             Action<EskillsError> error)
         {
-            var body = new CreateTicketBody("user_id","test_user",_ticketParameters);
-            var room_metadata = new UTF8Encoding().GetBytes(JsonUtility.ToJson(body.room_metadata));
-            Debug.Log(System.Text.Encoding.Default.GetString(room_metadata));
-            byte[] jsonToSend = new UTF8Encoding().GetBytes(JsonUtility.ToJson(body));
+            var body = new CreateTicketBody("user_id","test_user", ticketParameters);
+            var room_metadata = new UTF8Encoding().GetBytes(JsonUtility.ToJson(body.room_metadata)); 
+            var jsonString = JsonConvert.SerializeObject(body);
+            Debug.Log(jsonString);
+            byte[] jsonToSend = new UTF8Encoding().GetBytes(jsonString);
             Debug.Log("TicketRepo:"+System.Text.Encoding.Default.GetString(jsonToSend));
+            
             using (var request = new UnityWebRequest("https://api.eskills.catappult.io/queue/ticket/","POST"))
             {
                 request.SetRequestHeader("Content-Type", "application/json");
@@ -52,6 +45,10 @@ namespace Eskills.Service.Repository
                 }
             }
         }
+        //Ver contexto em vez de ter dois botoes
+        //Application.platform == RuntimePlatform.Android
+        //Fazer login
+        //GetComponent com tipo On MatchCreatedReceiver ( no service) no on succsess
 
         public IEnumerator GETTicketData(string ewt,string ticket_id, Action<TicketData> success,
             Action<EskillsError> error)

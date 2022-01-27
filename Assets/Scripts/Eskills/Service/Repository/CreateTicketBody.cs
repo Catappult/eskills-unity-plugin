@@ -41,5 +41,10 @@ namespace Eskills.Service.Repository
             this.room_metadata = new Dictionary < string, string > ();
             this.room_metadata.Add("additionallProp1","string");
         }
+
+        public string getRoomMetadata()
+        {
+            return "room_metadata:{}";
+        }
     }
 }

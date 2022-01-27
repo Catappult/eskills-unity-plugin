@@ -8,16 +8,16 @@ namespace Eskills.Service
         private readonly TicketRepository _repository;
         private readonly ICoroutineExecutor _executor;
 
+
         public CreateTicketUseCase(TicketRepository repository, ICoroutineExecutor executor)
         {
             _repository = repository;
             _executor = executor;
         }
 
-        public void Execute(string ewt, Action<TicketData> success,
-            Action<EskillsError> error)
+        public void Execute(string ewt, TicketParameters ticketParameters,Action<TicketData> success, Action<EskillsError> error)
         {
-            _executor.StartCoroutine(_repository.CreateTicket(ewt, success, error));
+            _executor.StartCoroutine(_repository.CreateTicket(ewt,ticketParameters, success, error));    
         }
     }
 }

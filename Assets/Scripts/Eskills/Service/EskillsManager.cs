@@ -2,6 +2,7 @@ using System;
 using Eskills.Scripts;
 using Eskills.Service.Repository;
 using JetBrains.Annotations;
+using Eskills.Ui;
 
 namespace Eskills.Service
 {
@@ -11,15 +12,20 @@ namespace Eskills.Service
         private readonly GetRoomInfoUseCase _getRoomInfoUseCase;
         private readonly SetScoreUseCase _setScoreUseCase;
         private readonly GetTicketUseCase _getTicketUseCase;
+        private readonly JoinQueueUseCase _joinQueueUseCase;
         private readonly CreateTicketUseCase _createTicketUseCase;
+        private readonly LoginUseCase _loginUseCase;
+
         public EskillsManager(PurchaseActivity purchaseActivity, GetRoomInfoUseCase getRoomInfoUseCase,
-            SetScoreUseCase setScoreUseCase, GetTicketUseCase getTicketUseCase, CreateTicketUseCase createTicketUseCase)
+            SetScoreUseCase setScoreUseCase, GetTicketUseCase getTicketUseCase, JoinQueueUseCase joinQueueUseCase, CreateTicketUseCase createTicketUseCase,LoginUseCase loginUseCase)
         {
             _purchaseActivity = purchaseActivity;
             _getRoomInfoUseCase = getRoomInfoUseCase;
             _setScoreUseCase = setScoreUseCase;
             _getTicketUseCase = getTicketUseCase;
+            _joinQueueUseCase = joinQueueUseCase;
             _createTicketUseCase = createTicketUseCase;
+            _loginUseCase = loginUseCase;
         }
 
 
@@ -40,9 +46,9 @@ namespace Eskills.Service
             _setScoreUseCase.Execute(session, status, score, success, error);
         }
 
-        public void CreateTicket(string ewt, Action<TicketData> success, Action<EskillsError> error)
+        public void JoinQueue(string ewt, MatchParameters matchParameters, Action<string> success, Action<EskillsError> error)
         {
-            _createTicketUseCase.Execute(ewt, success, error);
+            _joinQueueUseCase.Execute(ewt, matchParameters,success, error);
         }
 
         public void GetTicket(string ewt, string ticketId, Action<TicketData> success, Action<EskillsError> error)
