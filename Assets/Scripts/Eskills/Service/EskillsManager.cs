@@ -15,9 +15,11 @@ namespace Eskills.Service
         private readonly JoinQueueUseCase _joinQueueUseCase;
         private readonly CreateTicketUseCase _createTicketUseCase;
         private readonly LoginUseCase _loginUseCase;
+        private readonly GetPeriodicUpdateUseCase _getPeriodicUpdateUseCase;
 
         public EskillsManager(PurchaseActivity purchaseActivity, GetRoomInfoUseCase getRoomInfoUseCase,
-            SetScoreUseCase setScoreUseCase, GetTicketUseCase getTicketUseCase, JoinQueueUseCase joinQueueUseCase, CreateTicketUseCase createTicketUseCase,LoginUseCase loginUseCase)
+            SetScoreUseCase setScoreUseCase, GetTicketUseCase getTicketUseCase, JoinQueueUseCase joinQueueUseCase, 
+            CreateTicketUseCase createTicketUseCase,LoginUseCase loginUseCase, GetPeriodicUpdateUseCase getPeriodicUpdateUseCase)
         {
             _purchaseActivity = purchaseActivity;
             _getRoomInfoUseCase = getRoomInfoUseCase;
@@ -26,6 +28,7 @@ namespace Eskills.Service
             _joinQueueUseCase = joinQueueUseCase;
             _createTicketUseCase = createTicketUseCase;
             _loginUseCase = loginUseCase;
+            _getPeriodicUpdateUseCase = getPeriodicUpdateUseCase;
         }
 
 
@@ -54,6 +57,16 @@ namespace Eskills.Service
         public void GetTicket(string ewt, string ticketId, Action<TicketData> success, Action<EskillsError> error)
         {
             _getTicketUseCase.Execute(ewt, ticketId, success, error);
+        }
+
+        public void GetPeriodicUpdate(string session, Action<RoomData> success, Action<EskillsError> error)
+        {
+            _getPeriodicUpdateUseCase.Execute(session, success, error);
+        }
+
+        public void StopPeriodicUpdate()
+        {
+            _getPeriodicUpdateUseCase.Stop();
         }
     }
 }
