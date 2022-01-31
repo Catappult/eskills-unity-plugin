@@ -64,5 +64,19 @@ namespace Eskills
             _eskillsManager.StopPeriodicUpdate();
         }
 
+        public void WaitForPlayersToFinnish(string session, Action<RoomData> success, Action<EskillsError> error)
+        {
+            GetPeriodicUpdate(session,
+                room => {
+                    Debug.Log("Waiting For All Players To Finish");
+                    if(room.status == RoomStatus.COMPLETED){
+                        success(room);
+                        StopPeriodicUpdate();
+                    }
+                },
+                error
+            );
+        }
+
     }
 }

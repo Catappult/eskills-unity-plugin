@@ -28,6 +28,7 @@ namespace Eskills.Ui
                 room => Debug.Log("ButtonsController: " + room.roomId),
                 error => Debug.Log("ButtonsController: " + error.Message));
         }
+        
 	    public void OnGetPeriodicUpdates()
         {
             service.GetPeriodicUpdate(sessionText.text,
@@ -35,11 +36,19 @@ namespace Eskills.Ui
                     Debug.Log("Periodic Score Update:"+room.roomId);
                     if(room.currentUser.status == PlayerStatus.COMPLETED){
                         service.StopPeriodicUpdate();
+                        OnWaitForPlayersToFinnish();
                     }
                 },
                 error =>  Debug.Log(error.Message)
             );
 
+        }
+
+        public void OnWaitForPlayersToFinnish()
+        {
+            service.WaitForPlayersToFinnish(sessionText.text, 
+                room=> Debug.Log(room.roomResult.winner.userName + "Won!"), 
+                error => Debug.Log(error));
         }
     }
 }
