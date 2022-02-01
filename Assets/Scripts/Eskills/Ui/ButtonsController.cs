@@ -12,7 +12,8 @@ namespace Eskills.Ui
         [SerializeField] private Text sessionText;
         [SerializeField] private Text scoreText;
         [SerializeField] private Dropdown playerStatus;
-
+        private bool periodicUpdate = false;
+        
         public void OnGetRoomInfoClick()
         {
             service.GetRoomInfo(sessionText.text, room => Debug.Log("ButtonsController: " + room.roomId),

@@ -11,22 +11,32 @@ namespace Eskills
     {
         private EskillsManager _eskillsManager;
         [SerializeField] public UserNameProvider _userNameProvider;
-
+        private string ewt="eyJ0eXAiOiJFV1QifQ.eyJpc3MiOiIweDNiRWJmNmE1Mzg2MTgwMDZCYzEwNUY2OTY0MTlkRjNmYkQ2N2VCMkUiLCJleHAiOjEwMjU3MDk2OTI1fQ.0eca45625db7de7debc43b4094340709fbbcba9ab4cac5ce2990aafd3d14fcee03366741bea1698cc60d2838058b43332322ca1dfab60bb673ef0715d68e9a0101";
 
         void Awake()
         {
             var roomRepository = new RoomRepository(new RoomResponseMapper());
+            var TicketRepository = new TicketRepository(new TicketResponseMapper());
             var getRoomInfoUseCase = new GetRoomInfoUseCase(roomRepository, this);
             var setScoreUseCase = new SetScoreUseCase(roomRepository, this);
+            var getTicketUseCase = new GetTicketUseCase(TicketRepository, this);
+            var createTicketUseCase = new CreateTicketUseCase(TicketRepository, this);
+            var loginUseCase = new LoginUseCase(roomRepository, this);
             var getPeriodicUpdateUseCase = new GetPeriodicUpdateUseCase(roomRepository,this);
-            _eskillsManager = new EskillsManager(new PurchaseActivity(), getRoomInfoUseCase, setScoreUseCase, getPeriodicUpdateUseCase);
+            var joinQueueUseCase = new JoinQueueUseCase(this, createTicketUseCase, loginUseCase,getTicketUseCase);
+            _eskillsManager = new EskillsManager(new PurchaseActivity(), getRoomInfoUseCase, setScoreUseCase, getTicketUseCase, joinQueueUseCase, createTicketUseCase, loginUseCase, getPeriodicUpdateUseCase);
         }
 
 
         public void StartPurchase(MatchParameters matchParameters)
         {
-            if (Application.platform != RuntimePlatform.Android) return;
-            string userName;
+            if (Application.platform != RuntimePlatform.Android)
+            {
+                JoinQueue(ewt, matchParameters);
+            }
+                
+            else{
+                string userName;
             if (_userNameProvider == null)
             {
                 userName = "";
@@ -41,6 +51,8 @@ namespace Eskills
             _eskillsManager.StartPurchase(userName, matchParameters.value, matchParameters.currency,
                 matchParameters.product, matchParameters.timeout, matchParameters.matchEnvironment,
                 matchParameters.numberOfPlayers);
+            }
+            
         }
 
 
@@ -55,6 +67,19 @@ namespace Eskills
             _eskillsManager.SetScore(session, status, score, success, error);
         }
 
+        public void GetTicket(string ewt, string ticket_id, Action<TicketData> success, Action<EskillsError> error)
+        {
+            _eskillsManager.GetTicket(ewt, ticket_id, success, error);
+        }
+
+        private void JoinQueue(string ewt, MatchParameters matchParameters)
+        {
+            _eskillsManager.JoinQueue(ewt, matchParameters, session => {
+                Debug.Log(session);
+                GetComponent<OnMatchCreatedReceiver>().OnMatchCreated(session);
+                }, error => Debug.Log(error));
+        }
+
         public void GetPeriodicUpdate(string session, Action<RoomData> success, Action<EskillsError> error)
         {
             _eskillsManager.GetPeriodicUpdate(session,success,error);
@@ -63,6 +88,5 @@ namespace Eskills
         {
             _eskillsManager.StopPeriodicUpdate();
         }
-
     }
 }

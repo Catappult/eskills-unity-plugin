@@ -2,6 +2,7 @@ using System;
 using Eskills.Scripts;
 using Eskills.Service.Repository;
 using JetBrains.Annotations;
+using Eskills.Ui;
 
 namespace Eskills.Service
 {
@@ -10,14 +11,23 @@ namespace Eskills.Service
         private readonly PurchaseActivity _purchaseActivity;
         private readonly GetRoomInfoUseCase _getRoomInfoUseCase;
         private readonly SetScoreUseCase _setScoreUseCase;
+        private readonly GetTicketUseCase _getTicketUseCase;
+        private readonly JoinQueueUseCase _joinQueueUseCase;
+        private readonly CreateTicketUseCase _createTicketUseCase;
+        private readonly LoginUseCase _loginUseCase;
         private readonly GetPeriodicUpdateUseCase _getPeriodicUpdateUseCase;
 
         public EskillsManager(PurchaseActivity purchaseActivity, GetRoomInfoUseCase getRoomInfoUseCase,
-            SetScoreUseCase setScoreUseCase, GetPeriodicUpdateUseCase getPeriodicUpdateUseCase)
+            SetScoreUseCase setScoreUseCase, GetTicketUseCase getTicketUseCase, JoinQueueUseCase joinQueueUseCase, 
+            CreateTicketUseCase createTicketUseCase,LoginUseCase loginUseCase, GetPeriodicUpdateUseCase getPeriodicUpdateUseCase)
         {
             _purchaseActivity = purchaseActivity;
             _getRoomInfoUseCase = getRoomInfoUseCase;
             _setScoreUseCase = setScoreUseCase;
+            _getTicketUseCase = getTicketUseCase;
+            _joinQueueUseCase = joinQueueUseCase;
+            _createTicketUseCase = createTicketUseCase;
+            _loginUseCase = loginUseCase;
             _getPeriodicUpdateUseCase = getPeriodicUpdateUseCase;
         }
 
@@ -39,9 +49,19 @@ namespace Eskills.Service
             _setScoreUseCase.Execute(session, status, score, success, error);
         }
 
+        public void JoinQueue(string ewt, MatchParameters matchParameters, Action<string> success, Action<EskillsError> error)
+        {
+            _joinQueueUseCase.Execute(ewt, matchParameters,success, error);
+        }
+
+        public void GetTicket(string ewt, string ticketId, Action<TicketData> success, Action<EskillsError> error)
+        {
+            _getTicketUseCase.Execute(ewt, ticketId, success, error);
+        }
+
         public void GetPeriodicUpdate(string session, Action<RoomData> success, Action<EskillsError> error)
         {
-             _getPeriodicUpdateUseCase.Execute(session, success, error);
+            _getPeriodicUpdateUseCase.Execute(session, success, error);
         }
 
         public void StopPeriodicUpdate()
