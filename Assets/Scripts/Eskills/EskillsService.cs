@@ -72,12 +72,12 @@ namespace Eskills
             _eskillsManager.GetTicket(ewt, ticket_id, success, error);
         }
 
-        public void JoinQueue(string ewt, MatchParameters matchParameters)
+        private void JoinQueue(string ewt, MatchParameters matchParameters)
         {
             _eskillsManager.JoinQueue(ewt, matchParameters, session => {
                 Debug.Log(session);
                 GetComponent<OnMatchCreatedReceiver>().OnMatchCreated(session);
-                }, error => {});
+                }, error => Debug.Log(error));
         }
 
         public void GetPeriodicUpdate(string session, Action<RoomData> success, Action<EskillsError> error)
