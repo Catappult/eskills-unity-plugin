@@ -9,22 +9,25 @@ namespace Eskills
 {
     public class EskillsService : MonoBehaviour, ICoroutineExecutor
     {
+        private readonly string _privateKey = Config.GetPrivateKey();
         private EskillsManager _eskillsManager;
-        [SerializeField] public UserNameProvider _userNameProvider;
+        [SerializeField] private UserNameProvider _userNameProvider;
 
 
         void Awake()
         {
             var roomRepository = new RoomRepository(new RoomResponseMapper());
+            var ticketRepository = new TicketRepository(_privateKey, this);
             var getRoomInfoUseCase = new GetRoomInfoUseCase(roomRepository, this);
             var setScoreUseCase = new SetScoreUseCase(roomRepository, this);
-            _eskillsManager = new EskillsManager(new PurchaseActivity(), getRoomInfoUseCase, setScoreUseCase);
+            var createRoomUseCase = new CreateRoomUseCase(this, ticketRepository, _privateKey, roomRepository);
+            _eskillsManager = new EskillsManager(new PurchaseActivity(), getRoomInfoUseCase, setScoreUseCase,
+                createRoomUseCase);
         }
 
 
         public void StartPurchase(MatchParameters matchParameters)
         {
-            if (Application.platform != RuntimePlatform.Android) return;
             string userName;
             if (_userNameProvider == null)
             {
@@ -37,6 +40,15 @@ namespace Eskills
                 userName = _userNameProvider.GetUserName();
             }
 
+            if (Application.isEditor)
+            {
+                _eskillsManager.CreateRoom(userName, matchParameters.value, matchParameters.currency,
+                    matchParameters.product, matchParameters.timeout, matchParameters.matchEnvironment,
+                    matchParameters.numberOfPlayers,
+                    session => GetComponent<OnMatchCreatedReceiver>().OnMatchCreated(session));
+            }
+
+            if (Application.platform != RuntimePlatform.Android) return;
             _eskillsManager.StartPurchase(userName, matchParameters.value, matchParameters.currency,
                 matchParameters.product, matchParameters.timeout, matchParameters.matchEnvironment,
                 matchParameters.numberOfPlayers);
