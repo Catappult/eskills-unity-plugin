@@ -78,9 +78,8 @@ namespace Eskills.Service.Repository
                 match_environment = matchEnvironment.ToString(),
                 number_of_users = numberOfPlayers,
                 match_max_duration = timeout,
-                package_name = "com.appcoins.eskills2048",
+                package_name = Application.identifier,
                 user_id = userName.ToLower(),
-                wallet_address = "0xe3afc21dcd87ab5e3aeda543e63883b689e6f518",
             };
 
             var request = new UnityWebRequest("https://api.eskills.catappult.io/queue/ticket/", "POST");
@@ -114,7 +113,6 @@ namespace Eskills.Service.Repository
         public string package_name;
         public string user_id;
         public string user_name;
-        public string wallet_address;
         public string match_environment;
         public int number_of_users;
         public float price;
