@@ -29,7 +29,7 @@ namespace Eskills.Ui
                 error => Debug.Log("ButtonsController: " + error.Message));
 
             if(status == SetScoreBody.Status.COMPLETED) {
-                service.LaunchEndgame(sessionText.text)
+                service.LaunchEndgame(sessionText.text);
             }  // TODO
 
         }

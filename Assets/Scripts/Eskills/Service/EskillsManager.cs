@@ -8,14 +8,17 @@ namespace Eskills.Service
     public class EskillsManager
     {
         private readonly PurchaseActivity _purchaseActivity;
+        private readonly EndgameActivity _endgameActivity;
         private readonly GetRoomInfoUseCase _getRoomInfoUseCase;
         private readonly SetScoreUseCase _setScoreUseCase;
         private readonly GetPeriodicUpdateUseCase _getPeriodicUpdateUseCase;
 
-        public EskillsManager(PurchaseActivity purchaseActivity, GetRoomInfoUseCase getRoomInfoUseCase,
-            SetScoreUseCase setScoreUseCase, GetPeriodicUpdateUseCase getPeriodicUpdateUseCase)
+        public EskillsManager(PurchaseActivity purchaseActivity, EndgameActivity endgameActivity,
+         GetRoomInfoUseCase getRoomInfoUseCase,SetScoreUseCase setScoreUseCase,
+          GetPeriodicUpdateUseCase getPeriodicUpdateUseCase)
         {
             _purchaseActivity = purchaseActivity;
+            _endgameActivity = endgameActivity;
             _getRoomInfoUseCase = getRoomInfoUseCase;
             _setScoreUseCase = setScoreUseCase;
             _getPeriodicUpdateUseCase = getPeriodicUpdateUseCase;
@@ -26,6 +29,11 @@ namespace Eskills.Service
             MatchEnvironment matchEnvironment, int numberOfPlayers)
         {
             _purchaseActivity.start(userName, value, currency, product, timeout, matchEnvironment, numberOfPlayers);
+        }
+
+        public void LaunchEndgame(string session)
+        {
+            _endgameActivity.start(session);
         }
 
         public void GetRoomInfo(string session, Action<RoomData> success, Action<EskillsError> error)
