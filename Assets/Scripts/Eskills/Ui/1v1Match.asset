@@ -12,10 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2249cb6b17e4cfb62b33ee07a92a82f3, type: 3}
   m_Name: 1v1Match
   m_EditorClassIdentifier: 
-  userName: 
   value: 1
   currency: USD
   product: 1v1
   timeout: 3600
   matchEnvironment: 1
-  numberOfPlayers: 2
+  numberOfPlayers: 1

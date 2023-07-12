@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
+import android.app.Activity
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import androidx.appcompat.app.AppCompatActivity
 
@@ -78,7 +79,7 @@ class EndgameActivity : AppCompatActivity() {
                 // If there's aptoide installed always choose Aptoide as default to open url
                 intent.setPackage(app.activityInfo.packageName)
                 break
-            } else if (app.activityInfo.packageName == BuildConfig.WALLET_PACKAGE_NAME) {
+            } else if (app.activityInfo.packageName == "com.appcoins.wallet") {
                 // If Aptoide is not installed and wallet is installed then choose Wallet
                 // as default to open url
                 intent.setPackage(app.activityInfo.packageName)
@@ -97,7 +98,7 @@ class EndgameActivity : AppCompatActivity() {
             //keys
             private const val SESSION_KEY = "SESSION"
 
-            private const val TAG = EndgameActivity::class.java.simpleName
+            private val TAG = EndgameActivity::class.java.simpleName
 
             public @JvmStatic 
             fun start(context: Activity, session: String): Intent {
@@ -105,6 +106,7 @@ class EndgameActivity : AppCompatActivity() {
                 val intent = Intent(context, EndgameActivity::class.java)
                 intent.putExtra(SESSION_KEY, session)
                 context.startActivity(intent)
+                return intent
             }
     }
 }
