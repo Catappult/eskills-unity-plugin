@@ -28,10 +28,6 @@ namespace Eskills.Ui
                 room => Debug.Log("ButtonsController: " + room.roomId),
                 error => Debug.Log("ButtonsController: " + error.Message));
             Debug.Log("Player Status: " + status);
-            if(status == SetScoreBody.Status.COMPLETED) {
-                service.LaunchEndgame(sessionText.text);
-            }  // TODO
-
         }
 	    public void OnGetPeriodicUpdates()
         {

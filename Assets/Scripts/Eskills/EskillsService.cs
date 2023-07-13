@@ -43,10 +43,6 @@ namespace Eskills
                 matchParameters.numberOfPlayers);
         }
 
-        public void LaunchEndgame(string session) {
-            _eskillsManager.LaunchEndgame(session);
-        }
-
         public void GetRoomInfo(string session, Action<RoomData> success, Action<EskillsError> error)
         {
             _eskillsManager.GetRoomInfo(session, success, error);

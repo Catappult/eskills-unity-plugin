@@ -31,11 +31,6 @@ namespace Eskills.Service
             _purchaseActivity.start(userName, value, currency, product, timeout, matchEnvironment, numberOfPlayers);
         }
 
-        public void LaunchEndgame(string session)
-        {
-            _endgameActivity.start(session);
-        }
-
         public void GetRoomInfo(string session, Action<RoomData> success, Action<EskillsError> error)
         {
             _getRoomInfoUseCase.Execute(session, success, error);
@@ -45,6 +40,9 @@ namespace Eskills.Service
             [CanBeNull] Action<RoomData> success, [CanBeNull] Action<EskillsError> error)
         {
             _setScoreUseCase.Execute(session, status, score, success, error);
+            if(status == SetScoreBody.Status.COMPLETED) {
+                _endgameActivity.start(session);
+            }
         }
 
         public void GetPeriodicUpdate(string session, Action<RoomData> success, Action<EskillsError> error)

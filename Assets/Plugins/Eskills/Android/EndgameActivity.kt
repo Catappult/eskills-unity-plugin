@@ -101,12 +101,11 @@ class EndgameActivity : AppCompatActivity() {
             private val TAG = EndgameActivity::class.java.simpleName
 
             public @JvmStatic 
-            fun start(context: Activity, session: String): Intent {
+            fun start(context: Activity, session: String){
                 Log.d(TAG, "start: $context")
                 val intent = Intent(context, EndgameActivity::class.java)
                 intent.putExtra(SESSION_KEY, session)
                 context.startActivity(intent)
-                return intent
             }
     }
 }
