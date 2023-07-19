@@ -45,18 +45,19 @@ class EndgameActivity : AppCompatActivity() {
     }
 
     private fun launchEskillsEndgameFlow(session: String?) {
-            val url = ("https://apichain.catappult.io"
-                + "/transaction/eskills/endgame?"
-                + "session="
-                + session
-                + "&domain="
-                + applicationContext.packageName)
-            val intent = buildTargetIntent(url)
-            try {
-                mLauncher.launch(intent)
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
+        Log.d(TAG, "endgame session token : $session")
+        val url = ("https://apichain.catappult.io"
+            + "/transaction/eskills/endgame?"
+            + "session="
+            + session
+            + "&domain="
+            + applicationContext.packageName)
+        val intent = buildTargetIntent(url)
+        try {
+            mLauncher.launch(intent)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     /**
