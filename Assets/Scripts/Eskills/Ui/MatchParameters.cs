@@ -12,7 +12,7 @@ namespace Eskills.Ui
         [SerializeField] public string product;
         [SerializeField] public int timeout = 600;
         [SerializeField] public MatchEnvironment matchEnvironment;
-        [SerializeField] public int numberOfPlayers = 1;
+        [SerializeField] public int numberOfPlayers = 2;
 
         public override string ToString()
         {

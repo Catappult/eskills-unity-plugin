@@ -8,7 +8,6 @@ namespace Eskills.Ui
         public override void OnMatchCompleted(string resultCode)
         {
             Debug.Log("OnMatchCompletedResultImplementation: " + resultCode);
-            // TODO
         }
     }
 }

@@ -16,5 +16,5 @@ MonoBehaviour:
   currency: USD
   product: 1v1
   timeout: 3600
-  matchEnvironment: 1
-  numberOfPlayers: 1
+  matchEnvironment: 0
+  numberOfPlayers: 2
