@@ -11,6 +11,7 @@ import androidx.activity.result.ActivityResultLauncher
 import android.app.Activity
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import androidx.appcompat.app.AppCompatActivity
+import com.unity3d.player.UnityPlayer
 
 class EndgameActivity : AppCompatActivity() {
     // activity result launcher
@@ -24,29 +25,18 @@ class EndgameActivity : AppCompatActivity() {
 
     private fun createLauncher() {
         mLauncher = registerForActivityResult(StartActivityForResult()) { result: ActivityResult ->
-        when (result.resultCode) {
-            RESULT_OK -> {
-                launchInitialActivity()
-                }
-            RESULT_RESTART -> {
-                // TODO - start purchase flow for same game mode
-            }
-            RESULT_SERVICE_UNAVAILABLE -> {}
-            RESULT_ERROR -> {}
-            RESULT_INVALID_URL -> {}
-            else -> launchInitialActivity()
+            UnityPlayer.UnitySendMessage(
+                "Eskills",
+                "OnMatchCompleted",
+                result.resultCode.toString()
+            )
+            finish()
         }
-        }
-    }
-
-    private fun launchInitialActivity() {
-        // TODO - go back to initial activity/main menu
-        finish()
     }
 
     private fun launchEskillsEndgameFlow(session: String?) {
         Log.d(TAG, "endgame session token : $session")
-        val url = ("https://apichain.catappult.io"
+        val url = ("https://apichain.dev.catappult.io"
             + "/transaction/eskills/endgame?"
             + "session="
             + session
@@ -80,7 +70,7 @@ class EndgameActivity : AppCompatActivity() {
                 // If there's aptoide installed always choose Aptoide as default to open url
                 intent.setPackage(app.activityInfo.packageName)
                 break
-            } else if (app.activityInfo.packageName == "com.appcoins.wallet") {
+            } else if (app.activityInfo.packageName == "com.appcoins.wallet.dev") {
                 // If Aptoide is not installed and wallet is installed then choose Wallet
                 // as default to open url
                 intent.setPackage(app.activityInfo.packageName)

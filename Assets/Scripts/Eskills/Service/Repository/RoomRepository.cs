@@ -19,7 +19,7 @@ namespace Eskills.Service.Repository
         public IEnumerator GETRoomData(string session, Action<RoomData> success,
             Action<EskillsError> error)
         {
-            using (var request = UnityWebRequest.Get("https://api.eskills.catappult.io/room/"))
+            using (var request = UnityWebRequest.Get("https://api.eskills.dev.catappult.io/room/"))
             {
                 request.SetRequestHeader("Content-Type", "application/json");
                 request.SetRequestHeader("Authorization", "Bearer " + session);
@@ -40,7 +40,7 @@ namespace Eskills.Service.Repository
         public IEnumerator SetScore(string session, SetScoreBody.Status status, int score,
             [CanBeNull] Action<RoomData> success, [CanBeNull] Action<EskillsError> error)
         {
-            using (var request = new UnityWebRequest("https://api.eskills.catappult.io/room/", "PATCH"))
+            using (var request = new UnityWebRequest("https://api.eskills.dev.catappult.io/room/", "PATCH"))
             {
                 request.SetRequestHeader("Content-Type", "application/json");
                 request.SetRequestHeader("Authorization", "Bearer " + session);
