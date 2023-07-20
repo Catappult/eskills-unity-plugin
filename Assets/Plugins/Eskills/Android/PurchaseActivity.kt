@@ -56,7 +56,7 @@ class PurchaseActivity : Activity() {
         val userId = intent.getStringExtra(USER_ID_KEY)
         val environment = intent.getStringExtra(ENVIRONMENT_KEY)
         val intent =
-            buildTargetIntent("https://apichain.dev.catappult.io/transaction/eskills?" +
+            buildTargetIntent("https://apichain.catappult.io/transaction/eskills?" +
                 "value=$value&currency=$currency&product=$product&" +
                 "user_name=$userName&user_id=$userId&domain=${applicationContext.packageName}" +
                 "&environment=$environment&number_of_users=$numberOfPlayers&timeout=$timeout")
@@ -95,7 +95,7 @@ class PurchaseActivity : Activity() {
                 // url
                 intent.setPackage(app.activityInfo.packageName)
                 break
-            } else if (app.activityInfo.packageName == "com.appcoins.wallet.dev") {
+            } else if (app.activityInfo.packageName == "com.appcoins.wallet") {
                 // If Aptoide is not installed and wallet is installed then choose Wallet
                 // as default to open url
                 intent.setPackage(app.activityInfo.packageName)

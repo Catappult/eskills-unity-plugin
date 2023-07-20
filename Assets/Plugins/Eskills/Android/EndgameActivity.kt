@@ -36,7 +36,7 @@ class EndgameActivity : AppCompatActivity() {
 
     private fun launchEskillsEndgameFlow(session: String?) {
         Log.d(TAG, "endgame session token : $session")
-        val url = ("https://apichain.dev.catappult.io"
+        val url = ("https://apichain.catappult.io"
             + "/transaction/eskills/endgame?"
             + "session="
             + session
@@ -70,7 +70,7 @@ class EndgameActivity : AppCompatActivity() {
                 // If there's aptoide installed always choose Aptoide as default to open url
                 intent.setPackage(app.activityInfo.packageName)
                 break
-            } else if (app.activityInfo.packageName == "com.appcoins.wallet.dev") {
+            } else if (app.activityInfo.packageName == "com.appcoins.wallet") {
                 // If Aptoide is not installed and wallet is installed then choose Wallet
                 // as default to open url
                 intent.setPackage(app.activityInfo.packageName)
