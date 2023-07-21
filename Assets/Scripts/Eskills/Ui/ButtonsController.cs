@@ -27,7 +27,6 @@ namespace Eskills.Ui
             service.SetScore(sessionText.text, status, int.Parse(scoreText.text),
                 room => Debug.Log("ButtonsController: " + room.roomId),
                 error => Debug.Log("ButtonsController: " + error.Message));
-            Debug.Log("Player Status: " + status);
         }
 	    public void OnGetPeriodicUpdates()
         {
