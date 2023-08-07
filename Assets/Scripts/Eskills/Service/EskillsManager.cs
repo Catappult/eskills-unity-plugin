@@ -8,15 +8,18 @@ namespace Eskills.Service
     public class EskillsManager
     {
         private readonly PurchaseActivity _purchaseActivity;
+        private readonly EndgameActivity _endgameActivity;
         private readonly GetRoomInfoUseCase _getRoomInfoUseCase;
         private readonly SetScoreUseCase _setScoreUseCase;
         private readonly CreateRoomUseCase _createRoomUseCase;
         private readonly GetPeriodicUpdateUseCase _getPeriodicUpdateUseCase;
 
-        public EskillsManager(PurchaseActivity purchaseActivity, GetRoomInfoUseCase getRoomInfoUseCase,
-            SetScoreUseCase setScoreUseCase, GetPeriodicUpdateUseCase getPeriodicUpdateUseCase, CreateRoomUseCase createRoomUseCase)
+        public EskillsManager(PurchaseActivity purchaseActivity, EndgameActivity endgameActivity,
+         GetRoomInfoUseCase getRoomInfoUseCase,SetScoreUseCase setScoreUseCase,
+          GetPeriodicUpdateUseCase getPeriodicUpdateUseCase, CreateRoomUseCase createRoomUseCase)
         {
             _purchaseActivity = purchaseActivity;
+            _endgameActivity = endgameActivity;
             _getRoomInfoUseCase = getRoomInfoUseCase;
             _setScoreUseCase = setScoreUseCase;
             _createRoomUseCase = createRoomUseCase;
@@ -39,6 +42,9 @@ namespace Eskills.Service
             [CanBeNull] Action<RoomData> success, [CanBeNull] Action<EskillsError> error)
         {
             _setScoreUseCase.Execute(session, status, score, success, error);
+            if(status == SetScoreBody.Status.COMPLETED) {
+                _endgameActivity.start(session);
+            }
         }
 
         public void GetPeriodicUpdate(string session, Action<RoomData> success, Action<EskillsError> error)

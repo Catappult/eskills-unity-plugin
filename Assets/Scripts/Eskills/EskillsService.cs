@@ -22,7 +22,7 @@ namespace Eskills
             var setScoreUseCase = new SetScoreUseCase(roomRepository, this);
             var getPeriodicUpdateUseCase = new GetPeriodicUpdateUseCase(roomRepository, this);
             var createRoomUseCase = new CreateRoomUseCase(this, ticketRepository, _privateKey, roomRepository);
-            _eskillsManager = new EskillsManager(new PurchaseActivity(), getRoomInfoUseCase, setScoreUseCase,
+            _eskillsManager = new EskillsManager(new PurchaseActivity(), new EndgameActivity(), getRoomInfoUseCase, setScoreUseCase,
                 getPeriodicUpdateUseCase, createRoomUseCase);
         }
 
@@ -54,7 +54,6 @@ namespace Eskills
                 matchParameters.product, matchParameters.timeout, matchParameters.matchEnvironment,
                 matchParameters.numberOfPlayers);
         }
-
 
         public void GetRoomInfo(string session, Action<RoomData> success, Action<EskillsError> error)
         {

@@ -13,5 +13,6 @@
 			<meta-data android:name="unityplayer.UnityActivity" android:value="true" />
 		</activity>
 		<activity android:name="com.appcoins.eskills_purchase.PurchaseActivity" android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+		<activity android:name="com.appcoins.eskills_endgame.EndgameActivity" android:theme="@style/Theme.AppCompat" />
 	</application>
 </manifest>
