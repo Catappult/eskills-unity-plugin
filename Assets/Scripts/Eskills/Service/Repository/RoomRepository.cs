@@ -66,5 +66,47 @@ namespace Eskills.Service.Repository
                 }
             }
         }
+
+        public IEnumerator login(string privateKey, string ticketId, string roomId, Action<string> onRoomcreated)
+        {
+            var request = new UnityWebRequest("https://api.eskills.catappult.io/room/authorization/login", "POST");
+
+            request.SetRequestHeader("Content-Type", "application/json");
+            request.SetRequestHeader("Authorization", "Bearer " + privateKey);
+            var loginBody = new LoginBody()
+            {
+                ticket_id = ticketId,
+                room_id = roomId
+            };
+            
+            string jsonRequestBody = JsonUtility.ToJson(loginBody);
+            byte[] bodyRaw = Encoding.UTF8.GetBytes(jsonRequestBody);
+            request.uploadHandler = new UploadHandlerRaw(bodyRaw);
+            request.downloadHandler = new DownloadHandlerBuffer();
+
+            yield return request.SendWebRequest();
+            if (request.result == UnityWebRequest.Result.Success)
+            {
+                string json = request.downloadHandler.text;
+                LoginResponse loginResponse = JsonUtility.FromJson<LoginResponse>(json);
+                Debug.Log(loginResponse.token);
+                onRoomcreated(loginResponse.token);
+            }
+            else
+            {
+                Debug.LogError(request.downloadHandler.text);
+            }
+        }
+
+        class LoginBody
+        {
+            public string ticket_id;
+            public string room_id;
+        }
+
+        class LoginResponse
+        {
+            public string token;
+        }
     }
 }
