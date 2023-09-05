@@ -11,16 +11,18 @@ namespace Eskills.Service
         private readonly EndgameActivity _endgameActivity;
         private readonly GetRoomInfoUseCase _getRoomInfoUseCase;
         private readonly SetScoreUseCase _setScoreUseCase;
+        private readonly CreateRoomUseCase _createRoomUseCase;
         private readonly GetPeriodicUpdateUseCase _getPeriodicUpdateUseCase;
 
         public EskillsManager(PurchaseActivity purchaseActivity, EndgameActivity endgameActivity,
          GetRoomInfoUseCase getRoomInfoUseCase,SetScoreUseCase setScoreUseCase,
-          GetPeriodicUpdateUseCase getPeriodicUpdateUseCase)
+          GetPeriodicUpdateUseCase getPeriodicUpdateUseCase, CreateRoomUseCase createRoomUseCase)
         {
             _purchaseActivity = purchaseActivity;
             _endgameActivity = endgameActivity;
             _getRoomInfoUseCase = getRoomInfoUseCase;
             _setScoreUseCase = setScoreUseCase;
+            _createRoomUseCase = createRoomUseCase;
             _getPeriodicUpdateUseCase = getPeriodicUpdateUseCase;
         }
 
@@ -53,6 +55,14 @@ namespace Eskills.Service
         public void StopPeriodicUpdate()
         {
             _getPeriodicUpdateUseCase.Stop();
+        }
+
+        public void CreateRoom(string userName, float value, string currency,
+            string product, int timeout, MatchEnvironment matchEnvironment,
+            int numberOfPlayers, Action<string> onRoomcreated)
+        {
+            _createRoomUseCase.Execute(userName, value, currency, product, timeout, matchEnvironment, numberOfPlayers,
+                onRoomcreated);
         }
     }
 }
