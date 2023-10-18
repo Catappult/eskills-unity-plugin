@@ -60,7 +60,12 @@ class PurchaseActivity : Activity() {
                 "value=$value&currency=$currency&product=$product&" +
                 "user_name=$userName&user_id=$userId&domain=${applicationContext.packageName}" +
                 "&environment=$environment&number_of_users=$numberOfPlayers&timeout=$timeout")
-        startActivityForResult(intent, REQUEST_CODE)
+        try {
+            startActivityForResult(intent, REQUEST_CODE)
+        } catch (e: Exception) {
+            //val intent = Intent(this, InstallWalletActivity::class.java)
+            //startActivity(intent)
+        }
       }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -80,27 +85,10 @@ class PurchaseActivity : Activity() {
         }
     }
 
-    private fun buildTargetIntent(url: String): Intent {
+   private fun buildTargetIntent(url: String): Intent {
         val intent = Intent(Intent.ACTION_VIEW)
         intent.data = Uri.parse(url)
-
-        // Check if there is an application that can process the AppCoins Billing
-        // flow
-        val packageManager: PackageManager = getApplicationContext().getPackageManager()
-        val appsList = packageManager
-                .queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY)
-        for (app in appsList) {
-            if (app.activityInfo.packageName == "cm.aptoide.pt") {
-                // If there's aptoide installed always choose Aptoide as default to open
-                // url
-                intent.setPackage(app.activityInfo.packageName)
-                break
-            } else if (app.activityInfo.packageName == "com.appcoins.wallet") {
-                // If Aptoide is not installed and wallet is installed then choose Wallet
-                // as default to open url
-                intent.setPackage(app.activityInfo.packageName)
-            }
-        }
+        intent.setPackage("com.appcoins.wallet")
         return intent
     }
 

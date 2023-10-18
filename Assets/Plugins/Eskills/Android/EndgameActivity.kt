@@ -61,21 +61,7 @@ class EndgameActivity : AppCompatActivity() {
     private fun buildTargetIntent(url: String): Intent {
         val intent = Intent(Intent.ACTION_VIEW)
         intent.data = Uri.parse(url)
-        // Check if there is an application that can process the AppCoins Billing
-        // flow
-        val packageManager = applicationContext.packageManager
-        val appsList = packageManager.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY)
-        for (app in appsList) {
-            if (app.activityInfo.packageName == "cm.aptoide.pt") {
-                // If there's aptoide installed always choose Aptoide as default to open url
-                intent.setPackage(app.activityInfo.packageName)
-                break
-            } else if (app.activityInfo.packageName == "com.appcoins.wallet") {
-                // If Aptoide is not installed and wallet is installed then choose Wallet
-                // as default to open url
-                intent.setPackage(app.activityInfo.packageName)
-            }
-        }
+        intent.setPackage("com.appcoins.wallet")
         return intent
     }
 
